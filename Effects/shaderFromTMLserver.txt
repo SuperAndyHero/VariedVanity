@@ -1,0 +1,38 @@
+sampler uImage0 : register(s0);
+sampler uImage1 : register(s1);
+float3 uColor;
+float3 uSecondaryColor;
+float uOpacity : register(C0);
+float uSaturation;
+float uRotation;
+float uTime;
+float4 uSourceRect;
+float2 uWorldPosition;
+float uDirection;
+float3 uLightSource;
+float2 uImageSize0;
+float2 uImageSize1;
+float2 ImageSize;
+float3 OutlineColor;
+
+float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
+{
+	float4 color = tex2D(uImage0, coords);
+
+	float offX = 1 / ImageSize.x;
+	float offY = 1 / ImageSize.y;
+	float alpha = color.a;
+
+	if (any(color))
+		color.rgba = float4(OutlineColor, color.a);
+
+	return color;
+}
+
+technique Technique1
+{
+	pass SilentBossGlow
+	{
+		PixelShader = compile ps_2_0 PixelShaderFunction();
+	}
+}

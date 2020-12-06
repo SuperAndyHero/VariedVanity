@@ -1,0 +1,9 @@
+author = SuperAndyHero
+version = 0.1
+displayName = Varied Vanity
+hideCode = true
+hideResources = false
+includeSource = false
+includePDB = true
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
+homepage = https://www.youtube.com/watch?v=dQw4w9WgXcQ

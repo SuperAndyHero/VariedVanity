@@ -1,0 +1,91 @@
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    // Normalized pixel coordinates (from 0 to 1)
+    vec2 uv = fragCoord/iResolution.xy;
+
+    float masklevel = texture(iChannel1,uv).r * 2.;
+    //2.;
+
+    // Define the bluring radius/strength (direction independant)
+    vec2 radius = vec2(10.0 * masklevel + 1.);
+	
+    // Calculate the value at the corners so that the matrix can be easily inverted
+    float max = sqrt(radius.x * radius.x + radius.y * radius.y);
+	
+    // Define the variable which will hold the blured values
+    vec3 blur = vec3(0.0);
+
+    // Define the variable which will be used to normalize the image
+    float sum = 0.0;
+	
+    // The kernel is dynamically created based on the bluring radius
+    for(float u = -radius.x; u<=radius.x; u++){
+	
+        for(float v = -radius.y; v<=radius.y; v++){
+		
+            // The pixel weight used by the kernel is defined as: the distance from the kernel origin (0,0)
+            // to the current kernel position, subtracted from the maximum possible distance. This leads
+            // to a gradient from 0% relative weight on the edges to 100% relative weight at the origin of the kernel
+            float weight = max - sqrt(u * u + v * v);
+			
+            // The weight is then exponentialized which seams to sleightly maintain more of the origianl detail
+            //weight = pow(weight, 2.0);
+            // The weight is then multiplied by the texture being sampled and added to the overall blurred values
+            blur += weight * texture( iChannel0, uv + (vec2(u, v)/iResolution.xy)).xyz;
+			
+            // The weight is then added for normalizing purposes
+            sum += weight;
+        }
+    }
+    // Finally the blurred image is normalized
+    blur /= sum;
+
+    // Output to screen
+    fragColor = vec4(blur , 1.0);
+}
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord ) (ver 2)
+{
+    // Normalized pixel coordinates (from 0 to 1)
+    vec2 uv = fragCoord/iResolution.xy;
+
+    float masklevel = texture(iChannel1,uv).r * 2.;
+    //2.;
+
+    // Define the bluring radius/strength (direction independant)
+    float radius = float(10.0 * masklevel + 1.);
+	
+    // Calculate the value at the corners so that the matrix can be easily inverted
+    float max = sqrt(radius * radius + radius * radius);
+	
+    // Define the variable which will hold the blured values
+    vec3 blur = vec3(0.0);
+
+    // Define the variable which will be used to normalize the image
+    float sum = 0.0;
+	
+    // The kernel is dynamically created based on the bluring radius
+    for(float u = -radius; u<=radius; u++){
+	
+        for(float v = -radius; v<=radius; v++){
+		
+            // The pixel weight used by the kernel is defined as: the distance from the kernel origin (0,0)
+            // to the current kernel position, subtracted from the maximum possible distance. This leads
+            // to a gradient from 0% relative weight on the edges to 100% relative weight at the origin of the kernel
+            float weight = max - sqrt(u * u + v * v);
+			
+            // The weight is then exponentialized which seams to sleightly maintain more of the origianl detail
+            //weight = pow(weight, 2.0);
+            // The weight is then multiplied by the texture being sampled and added to the overall blurred values
+            blur += weight * texture( iChannel0, uv + (vec2(u, v)/iResolution.xy)).xyz;
+			
+            // The weight is then added for normalizing purposes
+            sum += weight;
+        }
+    }
+    // Finally the blurred image is normalized
+    blur /= sum;
+
+    // Output to screen
+    fragColor = vec4(blur , 1.0);
+}

@@ -1,0 +1,5 @@
+D:\Documents\My Games\Terraria\ModLoader\Mod Sources\VariedVanity\obj\Debug\net40\VariedVanity.csprojResolveAssemblyReference.cache
+D:\Documents\My Games\Terraria\ModLoader\Mod Sources\VariedVanity\obj\Debug\net40\VariedVanity.Properties.Resources.resources
+D:\Documents\My Games\Terraria\ModLoader\Mod Sources\VariedVanity\obj\Debug\net40\VariedVanity.csproj.GenerateResource.cache
+D:\Documents\My Games\Terraria\ModLoader\Mod Sources\VariedVanity\obj\Debug\net40\VariedVanity.csproj.CoreCompileInputs.cache
+D:\Documents\My Games\Terraria\ModLoader\Mod Sources\VariedVanity\obj\Debug\net40\VariedVanity.AssemblyInfo.cs
